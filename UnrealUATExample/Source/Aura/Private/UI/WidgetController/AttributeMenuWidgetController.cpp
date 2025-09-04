@@ -3,8 +3,6 @@
 
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 
-#include "AssetDefinitionAssetInfo.h"
-#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
 
