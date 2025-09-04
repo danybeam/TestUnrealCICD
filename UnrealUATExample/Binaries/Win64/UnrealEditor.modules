@@ -2,6 +2,6 @@
 	"BuildId": "43139311",
 	"Modules": 
 	{
-		"UnrealUATExample": "UnrealEditor-UnrealUATExample.dll"
+		"Aura": "UnrealEditor-Aura.dll"
 	}
 }
