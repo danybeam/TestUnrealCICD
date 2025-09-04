@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\src\\testunreal\\main\\unrealuatexample\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealuatexample\\permoduleinline.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\src\\testunreal\\main\\unrealuatexample\\intermediate\\build\\win64\\x64\\unrealuatexampleeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\src\\testunreal\\main\\unrealuatexample\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealuatexample\\definitions.unrealuatexample.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

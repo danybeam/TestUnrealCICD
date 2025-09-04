@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\src\\testunreal\\main\\unrealuatexample\\source\\unrealuatexample\\unrealuatexample.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\src\\testunreal\\main\\unrealuatexample\\intermediate\\build\\win64\\x64\\unrealuatexampleeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\src\\testunreal\\main\\unrealuatexample\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealuatexample\\definitions.unrealuatexample.h",
+            "d:\\src\\testunreal\\main\\unrealuatexample\\source\\unrealuatexample\\unrealuatexample.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
