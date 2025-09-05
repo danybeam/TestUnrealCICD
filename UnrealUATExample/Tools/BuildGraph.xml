@@ -1,0 +1,21 @@
+<?xml version='1.0' ?>
+<BuildGraph xmlns="http://www.epicgames.com/BuildGraph"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.epicgames.com/BuildGraph ../../../Engine/Build/Graph/Schema.xsd">
+
+    <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="C:\src\TestUnrealCICD\UnrealUATExample\Aura.uproject" Description="The target project"/>
+    <Option Name="TargetName" Restrict="[^ ]*" DefaultValue="Aura" Description="The target project"/>
+    <Option Name="BuildType" Restrict="Development|Debug" DefaultValue="Development" Description= "Type of editor to compile" />
+    <Option Name="TestName" DefaultValue="'Project.Functional Tests'" Description="Test to run"/>
+
+    <Agent Name="Default Agent" Type="Win64">
+        <Node Name="Compile UnrealEditor Win64" Produces="#EditorBinaries">
+            <Compile Target="$(TargetName)Editor" Platform="Win64" 
+            Configuration="$(BuildType)" Project="$(TargetProject)" Tag="#EditorBinaries"/>
+        </Node>
+
+        <Node Name="Run Client Tests" Requires="#EditorBinaries">
+            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest=$(TestName) -Log"/>
+        </Node>
+    </Agent>
+</BuildGraph>
