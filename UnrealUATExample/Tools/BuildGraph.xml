@@ -1,4 +1,8 @@
 <?xml version='1.0' ?>
+<!---
+    For more information on build graph go to https://dev.epicgames.com/documentation/en-us/unreal-engine/buildgraph-script-anatomy-for-unreal-engine
+To run this build graph run [path to RunUAT script] -Script=[path to this file] -Target="[Name of the node you want to run]"
+--->
 <BuildGraph xmlns="http://www.epicgames.com/BuildGraph"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.epicgames.com/BuildGraph ../../../Engine/Build/Graph/Schema.xsd">
@@ -6,7 +10,7 @@
     <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="C:\src\TestUnrealCICD\UnrealUATExample\Aura.uproject" Description="The target project"/>
     <Option Name="TargetName" Restrict="[^ ]*" DefaultValue="Aura" Description="The target project"/>
     <Option Name="BuildType" Restrict="Development|Debug" DefaultValue="Development" Description= "Type of editor to compile" />
-    <Option Name="TestName" DefaultValue="'Project.Functional Tests'" Description="Test to run"/>
+    <Option Name="TestName" DefaultValue="'Aura.'" Description="Test to run"/>
 
     <Agent Name="Default Agent" Type="Win64">
         <Node Name="Compile UnrealEditor Win64" Produces="#EditorBinaries">
@@ -14,8 +18,15 @@
             Configuration="$(BuildType)" Project="$(TargetProject)" Tag="#EditorBinaries"/>
         </Node>
 
-        <Node Name="Run Client Tests" Requires="#EditorBinaries">
+        <Node Name="Run Client Tests" Requires="#EditorBinaries" Produces="#ClientTests">
             <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest=$(TestName) -Log"/>
+        </Node>
+        
+        <Node Name="Run Functional Tests" Requires="#EditorBinaries"  Produces="#FunctionalTests">
+            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest='Project.Functional Tests.Maps.' -Log"/>
+        </Node>
+        
+        <Node Name="Run All Tests" Requires="#ClientTests;#FunctionalTests">
         </Node>
     </Agent>
 </BuildGraph>
