@@ -1,7 +1,10 @@
 <?xml version='1.0' ?>
 <!--
-    For more information on build graph go to https://dev.epicgames.com/documentation/en-us/unreal-engine/buildgraph-script-anatomy-for-unreal-engine
+For more information on build graph go to https://dev.epicgames.com/documentation/en-us/unreal-engine/buildgraph-script-anatomy-for-unreal-engine
 To run this build graph run [path to RunUAT script] -Script=[path to this file] -Target="[Name of the node you want to run]"
+
+To pass parameter values for TargetProject and stuff use something like
+./RunUAT.bat BuildGraph -Script=MyBuildGraph.xml -Target=MyProject -Set:MyBooleanOption=true -Set:MyStringValue="Hello World"
 -->
 <BuildGraph xmlns="http://www.epicgames.com/BuildGraph"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
