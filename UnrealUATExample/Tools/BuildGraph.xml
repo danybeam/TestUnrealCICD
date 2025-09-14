@@ -18,7 +18,7 @@ To pass parameter values for TargetProject and stuff use something like
     <Agent Name="Default Agent" Type="Win64">
         <Node Name="Compile UnrealEditor Win64" Produces="#EditorBinaries">
             <Compile Target="$(TargetName)Editor" Platform="Win64" 
-            Configuration="$(BuildType)+Test" Project="$(TargetProject)" Tag="#EditorBinaries" Arguments="-NullRHI"/>
+            Configuration="$(BuildType)" Project="$(TargetProject)" Tag="#EditorBinaries" Arguments="-NullRHI"/>
         </Node>
 
         <Node Name="Run Client Tests" Requires="#EditorBinaries" Produces="#ClientTests">
