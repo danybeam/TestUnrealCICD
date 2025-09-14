@@ -10,7 +10,7 @@ To pass parameter values for TargetProject and stuff use something like
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.epicgames.com/BuildGraph ../../../Engine/Build/Graph/Schema.xsd">
 
-    <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="C:\src\TestUnrealCICD\UnrealUATExample\Aura.uproject" Description="The target project"/>
+    <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="..\Aura.uproject" Description="The target project"/>
     <Option Name="TargetName" Restrict="[^ ]*" DefaultValue="Aura" Description="The target project"/>
     <Option Name="BuildType" Restrict="Development|Debug" DefaultValue="Development" Description= "Type of editor to compile" />
     <Option Name="TestName" DefaultValue="'Aura.'" Description="Test to run"/>
