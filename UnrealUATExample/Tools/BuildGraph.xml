@@ -22,7 +22,7 @@ To pass parameter values for TargetProject and stuff use something like
         </Node>
 
         <Node Name="Run Client Tests" Requires="#EditorBinaries" Produces="#ClientTests">
-            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest=$(TestName) -NullRHI -Log"/>
+            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest=$(TestName) -NullRHI -ReportOutputPath='D:\src\TestUnreal\main\UnrealUATExample\Tools\Reports\testReport' -Log"/>
         </Node>
         
         <Node Name="Run Functional Tests" Requires="#EditorBinaries"  Produces="#FunctionalTests">
