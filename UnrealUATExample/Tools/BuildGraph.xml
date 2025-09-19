@@ -35,5 +35,27 @@ To pass parameter values for TargetProject and stuff use something like
         
         <Node Name="Run All Tests" Requires="#ClientTests;#FunctionalTests">
         </Node>
+        
+        <Node Name="Start build">
+            <Command Name="Turnkey" Arguments="-ScriptsForProject='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject' -command=VerifySdk -platform=Win64 -UpdateIfNeeded -EditorIO -EditorIOPort=63119  -project='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject'"/>
+        </Node>
+        
+        <Node Name="Make Build" Requires="Start Build">
+            <Command Name="BuildCookRun" Arguments="-nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject' -target=RPGParty -unrealexe='C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor-Cmd.exe' -platform=Win64 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory='C:/Users/oroz0020/Downloads/Release/Graph' -clientconfig=Shipping -nodebuginfo "/>
+        </Node>
     </Agent>
 </BuildGraph>
+
+<!--
+Start Build
+ -ScriptsForProject="C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject" Turnkey -command=VerifySdk -platform=Win64 -UpdateIfNeeded -EditorIO -EditorIOPort=63119  -project="C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject"
+
+
+Make Build
+   BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject' -target=RPGParty -unrealexe='C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEdito
+r-Win64-DebugGame-Cmd.exe' -platform=Win64 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory='C:/Users/oroz0020/Downloads/Release/Graph' -clientconfig=Shipping -nodebuginfo
+
+
+Unused yet
+      -nocompile -nocompileuat
+-->
