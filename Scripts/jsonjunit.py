@@ -134,8 +134,7 @@ def main():
     This is the main function where the program's primary logic resides.
     """
     
-    #file = Path(sys.argv[1])
-    file = Path("D:/reports/index.json")
+    file = Path(sys.argv[1])
 
     if not file.is_file():
         raise  ValueError("The path [" + sys.argv[1] + "] is not a file")
@@ -180,8 +179,7 @@ def main():
     ET.indent(tree, space=" ", level=0)
     # Write the XML to a file
     try:
-       # tree.write(sys.argv[2], encoding="utf-8", xml_declaration=True)
-        tree.write("D:/reports/index.xml", encoding="utf-8", xml_declaration=True)
+        tree.write(sys.argv[2], encoding="utf-8", xml_declaration=True)
         print("XML file created successfully.")
     except Exception as e:
         print(f"Error writing XML file: {e}")
