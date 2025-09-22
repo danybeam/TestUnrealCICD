@@ -143,7 +143,7 @@ def main():
         data = json.load(jsonFile)
 
     # Create the root element
-    root = ET.Element("testsuite", name="All Tests", tests=str(data["succeeded"]+data["succeededWithWarnings"]+data["failed"]+data["notRun"]), failures=str(data["failed"]),skipped=str(data["notRun"]), time=str(data["totalDuration"]), timestamp=str(data["reportCreatedOn"]))
+    root = ET.Element("testsuites", name="All Tests", tests=str(data["succeeded"]+data["succeededWithWarnings"]+data["failed"]+data["notRun"]), failures=str(data["failed"]),skipped=str(data["notRun"]), time=str(data["totalDuration"]), timestamp=str(data["reportCreatedOn"]))
 
     testTree = {}
 
