@@ -15,9 +15,9 @@ void FAlwaysFailTestSimple::Define()
 
 		});
 
-	It("Should Test DamageActor Count", [this]()
+	It("Test1", [this]()
 		{
-			TestTrue("True", true);
+			TestTrue("Should be true", false);
 		});
 
 	AfterEach([this]()

@@ -6,14 +6,25 @@ To run this build graph run [path to RunUAT script] -Script=[path to this file] 
 To pass parameter values for TargetProject and stuff use something like
 ./RunUAT.bat BuildGraph -Script=MyBuildGraph.xml -Target=MyProject -Set:MyBooleanOption=true -Set:MyStringValue="Hello World"
 -->
+
+<!--
+Known issues:
+    Right now this script is very monolitic. Everything will stay in disk until the process finishes. 
+    There is still enough modularity to run any node and only needs its dependencies 
+    but I (Daniel) would like to understand agents more and be able to break down the script more modularily.
+-->
 <BuildGraph xmlns="http://www.epicgames.com/BuildGraph"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.epicgames.com/BuildGraph ../../../Engine/Build/Graph/Schema.xsd">
 
-    <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="kjlkjlj" Description="The target project"/>
-    <Option Name="TargetName" Restrict="[^ ]*" DefaultValue="Aura" Description="The target project"/>
-    <Option Name="BuildType" Restrict="Development|Debug" DefaultValue="Development" Description= "Type of editor to compile" />
-    <Option Name="TestName" DefaultValue="'Aura.'" Description="Test to run"/>
+    <Option Name="TargetProject" Restrict="[^ ]*" DefaultValue="" Description="The target project path"/>
+    <Option Name="TargetName" Restrict="[^ ]*" DefaultValue="" Description="The target project name"/>
+    <Option Name="BuildType" Restrict="Development|Debug|Shipping" DefaultValue="Development" Description= "Type of editor to compile" />
+    <Option Name="TestNames" DefaultValue="Lute.+M_" Description="Test to run"/>
+    <Option Name="UnrealCMDPath" DefaultValue="C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" Description="Path to the UnrealEditor-Cmd.exe (or variant) to use"/>
+    <Option Name="ReportPath" DefaultValue="D:\reports" Description="Where to dump the test reports" />
+    <Option Name="ReportFormats" DefaultValue="xml+json" Description="What format to output the reports in"/>
+    <Option Name="ShippingOutputPath" DefaultValue="D:\shipping" Description="Where to output the finished shipping build" />
 
     <Agent Name="Default Agent" Type="Win64">
         <Node Name="Compile UnrealEditor Win64" Produces="#EditorBinaries">
@@ -21,27 +32,17 @@ To pass parameter values for TargetProject and stuff use something like
             Configuration="$(BuildType)" Project="$(TargetProject)" Tag="#EditorBinaries" Arguments="-NullRHI"/>
         </Node>
 
-        <Node Name="Run Client Tests" Requires="#EditorBinaries" Produces="#ClientTests">
-            <Spawn Exe="C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" Arguments="$(TargetProject) -unattended -nopause -nosplash -NullRHI -ExecCmds='Automation RunTest Aura;Quit' -ReportExportPath='C:\reports' -ReportOutputFormats=json -TestExit='Automation Test Queue Empty' -Log -Verbose"  LogOutput="true"/>
+        <Node Name="Run All Tests" Requires="#EditorBinaries">
+            <Spawn Exe="$(UnrealCMDPath)" Arguments="$(TargetProject) -unattended -nopause -nosplash -NullRHI -ExecCmds='Automation RunTest $(TestNames);Quit' -ReportExportPath='$(ReportPath)' -ReportOutputFormats=$(ReportFormats) -TestExit='Automation Test Queue Empty' -Log -Verbose -Log=$(ReportPath)/Spec/RunLog.log"  LogOutput="true"/>
         </Node>
-
-        <Node Name="Run Client Tests2" Requires="#EditorBinaries" Produces="#ClientTests2">
-            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest=$(TestName) -NullRHI -ReportExportPath='D:\testReport'"/>
-        </Node>
-        
-        <Node Name="Run Functional Tests" Requires="#EditorBinaries"  Produces="#FunctionalTests">
-            <Command Name="RunUnreal" Arguments="-Test=UE.TargetAutomation -Build=Editor -Project=$(TargetProject) -RunTest='Project.Functional Tests.Maps.' -NullRHI -Log"/>
+     
+        <Node Name="Start Shipping Build" Requires="Run All Tests">
+            <Command Name="Turnkey" Arguments="-ScriptsForProject=$(TargetProject) -command=VerifySdk -platform=Win64 -UpdateIfNeeded -EditorIO -EditorIOPort=63119  -project=$(TargetProject)"/>
         </Node>
         
-        <Node Name="Run All Tests" Requires="#ClientTests;#FunctionalTests">
-        </Node>
-        
-        <Node Name="Start build">
-            <Command Name="Turnkey" Arguments="-ScriptsForProject='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject' -command=VerifySdk -platform=Win64 -UpdateIfNeeded -EditorIO -EditorIOPort=63119  -project='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject'"/>
-        </Node>
-        
-        <Node Name="Make Build" Requires="Start Build">
-            <Command Name="BuildCookRun" Arguments="-nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project='C:/Users/oroz0020/Downloads/RPGParty/RPGParty.uproject' -target=RPGParty -unrealexe='C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor-Cmd.exe' -platform=Win64 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory='C:/Users/oroz0020/Downloads/Release/Graph' -clientconfig=Shipping -nodebuginfo "/>
+        <Node Name="Make Shipping Build" Requires="Start Shipping Build">
+            <Command Name="BuildCookRun" Arguments="-nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project=$(TargetProject) -target=$(TargetName) -unrealexe='$(UnrealCMDPath)' -platform=Win64 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory=$(ShippingOutputPath) -clientconfig=Shipping -nodebuginfo "/>
+            <!-- Here The target type is not parametrized because these nodes are specific for shipping targets -->
         </Node>
     </Agent>
 </BuildGraph>

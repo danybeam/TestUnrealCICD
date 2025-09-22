@@ -2,7 +2,7 @@
 
 # include "Test/AuraTestUtils.h"
 
-BEGIN_DEFINE_SPEC(FAlwaysPassTestComplex, "Aura.Tests.AlwaysPassTestComplex", FAuraTestUtils::TestsFlags)
+BEGIN_DEFINE_SPEC(FAlwaysPassTestComplex, "Aura.Tests.AlwaysPassTest", FAuraTestUtils::TestsFlags)
 
 UWorld* World;
 
@@ -15,7 +15,7 @@ void FAlwaysPassTestComplex::Define()
 
 		});
 
-	It("Should Test DamageActor Count", [this]()
+	It("Test2", [this]()
 		{
 			TestTrue("True", true);
 		});
